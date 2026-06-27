@@ -1,18 +1,23 @@
 jQuery(document).ready(function ($) {
     'use strict';
 
-    // Prevent multiple initializations
-    if (window.kaiIntakeInitialized) {
+    if (window.kaicallsAiIntakeInitialized) {
         return;
     }
-    window.kaiIntakeInitialized = true;
+    window.kaicallsAiIntakeInitialized = true;
 
-    const $form = $('#kai-intake-form');
-    const $messageDiv = $('#kai-form-message');
-    const $submitBtn = $form.find('.kai-submit-btn');
+    const config = window.kaicallsAiIntakeFrontend || {};
+    const messages = config.messages || {};
+    const $form = $('#kaicalls-ai-intake-form');
+    const $messageDiv = $('#kaicalls-ai-intake-form-message');
+    const $submitBtn = $form.find('.kaicalls-ai-intake-submit-btn');
 
     if (!$form.length) {
         return;
+    }
+
+    function getMessage(key, fallback) {
+        return messages[key] || fallback;
     }
 
     function isValidEmail(email) {
@@ -31,24 +36,24 @@ jQuery(document).ready(function ($) {
     }
 
     function validateForm() {
-        const name = $form.find('#kai_name').val().trim();
-        const email = $form.find('#kai_email').val().trim();
-        const message = $form.find('#kai_message').val().trim();
+        const name = $form.find('#kaicalls_ai_intake_name').val().trim();
+        const email = $form.find('#kaicalls_ai_intake_email').val().trim();
+        const message = $form.find('#kaicalls_ai_intake_message').val().trim();
 
         if (!name) {
-            showMessage('Please enter your name.', 'error');
+            showMessage(getMessage('nameRequired', 'Please enter your name.'), 'error');
             return false;
         }
         if (!email) {
-            showMessage('Please enter your email address.', 'error');
+            showMessage(getMessage('emailRequired', 'Please enter your email address.'), 'error');
             return false;
         }
         if (!isValidEmail(email)) {
-            showMessage('Please enter a valid email address.', 'error');
+            showMessage(getMessage('invalidEmail', 'Please enter a valid email address.'), 'error');
             return false;
         }
         if (!message) {
-            showMessage('Please enter a message.', 'error');
+            showMessage(getMessage('messageRequired', 'Please enter a message.'), 'error');
             return false;
         }
         return true;
@@ -71,17 +76,17 @@ jQuery(document).ready(function ($) {
 
         setSubmitting(true);
         $messageDiv.hide();
-        showMessage('Submitting your information...', 'info');
+        showMessage(getMessage('submitting', 'Submitting your information...'), 'info');
 
         const formData = new FormData(this);
         const data = Object.fromEntries(formData.entries());
 
         $.ajax({
-            url: kai_intake_ajax.ajax_url,
+            url: config.ajaxUrl,
             type: 'POST',
             data: {
-                action: 'kai_intake_submit',
-                nonce: data.kai_nonce,
+                action: 'kaicalls_ai_intake_submit',
+                nonce: data.kaicalls_ai_intake_nonce,
                 name: data.name,
                 email: data.email,
                 phone: data.phone,
@@ -91,21 +96,21 @@ jQuery(document).ready(function ($) {
             timeout: 30000,
             success: function (response) {
                 if (response.success) {
-                    showMessage(kai_intake_ajax.messages.success, 'success');
+                    showMessage(getMessage('success', 'Thank you for your submission!'), 'success');
                     $form[0].reset();
                 } else {
                     const errorMsg = response.data && response.data.error
                         ? response.data.error
-                        : kai_intake_ajax.messages.error;
+                        : getMessage('error', 'An error occurred. Please try again.');
                     showMessage(errorMsg, 'error');
                 }
             },
             error: function (xhr, status) {
-                let errorMsg = kai_intake_ajax.messages.network_error;
+                let errorMsg = getMessage('networkError', 'A network error occurred. Please try again.');
                 if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.error) {
                     errorMsg = xhr.responseJSON.data.error;
                 } else if (status === 'timeout') {
-                    errorMsg = 'Request timed out. Please try again.';
+                    errorMsg = getMessage('timeout', 'Request timed out. Please try again.');
                 }
                 showMessage(errorMsg, 'error');
             },

@@ -1,4 +1,4 @@
-.kai-intake-form {
+.kaicalls-ai-intake-form {
   max-width: 500px;
   margin: 20px auto;
   padding: 20px;
@@ -6,27 +6,27 @@
   border-radius: 5px;
 }
 
-.kai-intake-form .form-group {
+.kaicalls-ai-intake-form .form-group {
   margin-bottom: 15px;
 }
 
-.kai-intake-form label {
+.kaicalls-ai-intake-form label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.kai-intake-form input[type='text'],
-.kai-intake-form input[type='email'],
-.kai-intake-form input[type='tel'],
-.kai-intake-form textarea {
+.kaicalls-ai-intake-form input[type='text'],
+.kaicalls-ai-intake-form input[type='email'],
+.kaicalls-ai-intake-form input[type='tel'],
+.kaicalls-ai-intake-form textarea {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
 
-.kai-intake-form .kai-submit-btn {
+.kaicalls-ai-intake-form .kaicalls-ai-intake-submit-btn {
   background-color: #0073aa;
   color: #fff;
   padding: 10px 15px;
@@ -35,35 +35,35 @@
   cursor: pointer;
 }
 
-.kai-intake-form .kai-submit-btn:hover {
+.kaicalls-ai-intake-form .kaicalls-ai-intake-submit-btn:hover {
   background-color: #005177;
 }
 
-.kai-intake-form .kai-submit-btn:disabled {
+.kaicalls-ai-intake-form .kaicalls-ai-intake-submit-btn:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-.kai-form-message {
+.kaicalls-ai-intake-form-message {
   padding: 10px;
   margin-top: 15px;
   border-radius: 3px;
   display: none;
 }
 
-.kai-form-message.success {
+.kaicalls-ai-intake-form-message.success {
   background-color: #dff0d8;
   border: 1px solid #d6e9c6;
   color: #3c763d;
 }
 
-.kai-form-message.error {
+.kaicalls-ai-intake-form-message.error {
   background-color: #f2dede;
   border: 1px solid #ebccd1;
   color: #a94442;
 }
 
-.kai-form-message.info {
+.kaicalls-ai-intake-form-message.info {
   background-color: #d9edf7;
   border: 1px solid #bce8f1;
   color: #31708f;
